@@ -33,9 +33,9 @@ function RouteComponent() {
                 value={colorScheme}
                 onChange={(newValue) => newValue && setColorScheme(newValue)}
                 data={[
+                    { label: "System", value: "auto" },
                     { label: "Dark", value: "dark" },
                     { label: "Light", value: "light" },
-                    { label: "System", value: "auto" },
                 ]}
             />
             <Select

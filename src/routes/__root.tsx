@@ -15,11 +15,11 @@ function RootLayout() {
             void navigator.wakeLock.request("screen");
             // @ts-expect-error
             navigator.virtualKeyboard.overlaysContent = true;
-        } catch (_) {}
+        } catch {}
     }, []);
 
     return (
-        <MantineProvider defaultColorScheme={"dark"} theme={{ primaryColor }}>
+        <MantineProvider theme={{ primaryColor }}>
             <Box p={"xs"} h={"100dvh"} w={"100dvw"}>
                 <Outlet />
             </Box>
