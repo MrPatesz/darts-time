@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/darts-time/sw.js', { scope: '/darts-time/' })})}
