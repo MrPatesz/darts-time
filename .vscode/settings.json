@@ -8,5 +8,7 @@
     },
     "search.exclude": {
         "**/routeTree.gen.ts": true
-    }
+    },
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.formatOnSave": true
 }
