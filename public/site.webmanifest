@@ -4,31 +4,32 @@
     "description": "Darts Time is an application for keeping score in darts. It comes without ads and can be installed on your device.",
     "icons": [
         {
-            "src": "/pwa-192x192.png",
+            "src": "pwa-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/pwa-512x512.png",
+            "src": "pwa-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/pwa-maskable-192x192.png",
+            "src": "pwa-maskable-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "/pwa-maskable-512x512.png",
+            "src": "pwa-maskable-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         }
     ],
-    "start_url": "/",
+    "start_url": ".",
+    "scope": ".",
     "display": "standalone",
     "background_color": "#242424",
     "theme_color": "#FFFFFF"

@@ -2,6 +2,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { PrimaryColorProvider } from "./contexts/primaryColorContext";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 
@@ -21,7 +22,9 @@ if (!rootElement.innerHTML) {
     const root = createRoot(rootElement);
     root.render(
         <StrictMode>
-            <RouterProvider router={router} />
+            <PrimaryColorProvider>
+                <RouterProvider router={router} />
+            </PrimaryColorProvider>
         </StrictMode>,
     );
 }
