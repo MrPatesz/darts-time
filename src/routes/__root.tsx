@@ -1,3 +1,5 @@
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -13,8 +15,8 @@ function RootLayout() {
     }, []);
 
     return (
-        <>
+        <MantineProvider>
             <Outlet />
-        </>
+        </MantineProvider>
     );
 }
