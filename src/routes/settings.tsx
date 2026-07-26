@@ -1,16 +1,7 @@
-import {
-    Box,
-    Button,
-    CheckIcon,
-    Group,
-    Select,
-    Stack,
-    Text,
-    Title,
-    useMantineColorScheme,
-} from "@mantine/core";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { CheckIcon, Group, Select, Stack, Text, useMantineColorScheme } from "@mantine/core";
+import { createFileRoute } from "@tanstack/react-router";
 
+import { PageTitle } from "../components/PageTitle";
 import { usePrimaryColor } from "../contexts/primaryColorContext";
 import { primaryColors } from "../utils/primaryColors";
 import { toPascalCase } from "../utils/toPascalCase";
@@ -24,10 +15,8 @@ function RouteComponent() {
     const [primaryColor, setPrimaryColor] = usePrimaryColor();
 
     return (
-        <Stack h={"100%"}>
-            <Title order={2} ta={"center"}>
-                Settings
-            </Title>
+        <Stack>
+            <PageTitle title="Settings" />
             <Select
                 label={"Color Scheme"}
                 value={colorScheme}
@@ -52,10 +41,6 @@ function RouteComponent() {
                     </Group>
                 )}
             />
-            <Box flex={1} />
-            <Link to={"/"}>
-                <Button w={"100%"}>Back</Button>
-            </Link>
         </Stack>
     );
 }

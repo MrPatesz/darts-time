@@ -22,10 +22,8 @@ function Index() {
                     Statistics
                 </Button>
             </Link>
-            <Link to={"/"}>
-                <Button w={"100%"} disabled>
-                    Profiles
-                </Button>
+            <Link to={"/profiles"}>
+                <Button w={"100%"}>Profiles</Button>
             </Link>
             <Link to="/settings">
                 <Button w={"100%"}>Settings</Button>
