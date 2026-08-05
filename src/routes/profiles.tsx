@@ -131,63 +131,71 @@ function ProfileModal({ id, onClose }: { id: number; onClose: () => void }) {
                     title={`${creation ? "Create" : "Edit"} Profile`}
                     closeOnClickOutside={!isDirty}
                 >
-                    <Stack>
-                        <form.AppField name="name">
-                            {(field) => <field.TextField label={"Name"} />}
-                        </form.AppField>
-                        <form.AppField name="type">
-                            {(field) => (
-                                <field.EnumField
-                                    label={"Type"}
-                                    enumObject={ProfileType}
-                                    readOnly={!creation}
-                                    onChange={(newType) => {
-                                        if (newType === ProfileType.DARTBOT) {
-                                            form.setFieldValue("average", 1);
-                                            form.setFieldValue("checkout", 1);
-                                        } else {
-                                            form.resetField("average");
-                                            form.resetField("checkout");
-                                        }
-                                    }}
-                                />
-                            )}
-                        </form.AppField>
-                        <form.Subscribe selector={(s) => s.values.type}>
-                            {(type) =>
-                                type === ProfileType.DARTBOT && (
-                                    <>
-                                        <form.AppField name="average">
-                                            {(field) => (
-                                                <field.NumberField
-                                                    label={"Average"}
-                                                    allowDecimal={false}
-                                                    allowNegative={false}
-                                                    min={1}
-                                                    max={180}
-                                                />
-                                            )}
-                                        </form.AppField>
-                                        <form.AppField name="checkout">
-                                            {(field) => (
-                                                <field.NumberField
-                                                    label={"Checkout"}
-                                                    allowDecimal={false}
-                                                    allowNegative={false}
-                                                    min={1}
-                                                    max={100}
-                                                    suffix={"%"}
-                                                />
-                                            )}
-                                        </form.AppField>
-                                    </>
-                                )
-                            }
-                        </form.Subscribe>
-                        <Button onClick={() => form.handleSubmit()} disabled={!isDirty}>
-                            Submit
-                        </Button>
-                    </Stack>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            void form.handleSubmit();
+                        }}
+                    >
+                        <Stack>
+                            <form.AppField name="name">
+                                {(field) => <field.TextField label={"Name"} />}
+                            </form.AppField>
+                            <form.AppField name="type">
+                                {(field) => (
+                                    <field.EnumField
+                                        label={"Type"}
+                                        enumObject={ProfileType}
+                                        readOnly={!creation}
+                                        onChange={(newType) => {
+                                            if (newType === ProfileType.DARTBOT) {
+                                                form.setFieldValue("average", 1);
+                                                form.setFieldValue("checkout", 1);
+                                            } else {
+                                                form.resetField("average");
+                                                form.resetField("checkout");
+                                            }
+                                        }}
+                                    />
+                                )}
+                            </form.AppField>
+                            <form.Subscribe selector={(s) => s.values.type}>
+                                {(type) =>
+                                    type === ProfileType.DARTBOT && (
+                                        <>
+                                            <form.AppField name="average">
+                                                {(field) => (
+                                                    <field.NumberField
+                                                        label={"Average"}
+                                                        allowDecimal={false}
+                                                        allowNegative={false}
+                                                        min={1}
+                                                        max={180}
+                                                    />
+                                                )}
+                                            </form.AppField>
+                                            <form.AppField name="checkout">
+                                                {(field) => (
+                                                    <field.NumberField
+                                                        label={"Checkout"}
+                                                        allowDecimal={false}
+                                                        allowNegative={false}
+                                                        min={1}
+                                                        max={100}
+                                                        suffix={"%"}
+                                                    />
+                                                )}
+                                            </form.AppField>
+                                        </>
+                                    )
+                                }
+                            </form.Subscribe>
+                            <Button type={"submit"} disabled={!isDirty}>
+                                Submit
+                            </Button>
+                        </Stack>
+                    </form>
                 </Modal>
             )}
         </form.Subscribe>

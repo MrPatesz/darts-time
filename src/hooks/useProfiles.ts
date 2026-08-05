@@ -27,7 +27,7 @@ export const useProfiles = () => {
 
     const update = (profile: Profile) =>
         setProfiles((prev) => {
-            const index = prev.findIndex((p) => p.name === profile.name);
+            const index = prev.findIndex((p) => p.id === profile.id);
 
             return prev.toSpliced(index, 1, profile);
         });
