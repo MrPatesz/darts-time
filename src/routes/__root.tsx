@@ -4,6 +4,7 @@ import {
     Grid,
     Group,
     MantineProvider,
+    Paper,
     SimpleGrid,
     Stack,
     Tooltip,
@@ -54,6 +55,7 @@ const theme: MantineThemeOverride = {
         Group: Group.extend({
             defaultProps: {
                 gap: "xs",
+                wrap: "nowrap",
             },
         }),
         Grid: Grid.extend({
@@ -69,6 +71,12 @@ const theme: MantineThemeOverride = {
         ActionIcon: ActionIcon.extend({
             defaultProps: {
                 variant: "transparent",
+            },
+        }),
+        Paper: Paper.extend({
+            defaultProps: {
+                withBorder: true,
+                p: "xs",
             },
         }),
     },

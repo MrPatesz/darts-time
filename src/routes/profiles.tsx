@@ -81,7 +81,7 @@ function RouteComponent() {
                                     </ActionIcon>
                                 ),
                                 render: (p) => (
-                                    <Group wrap={"nowrap"} gap={"xs"}>
+                                    <Group gap={"xs"}>
                                         <ActionIcon onClick={() => setId(p.id)}>
                                             <IconPencil />
                                         </ActionIcon>

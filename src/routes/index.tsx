@@ -1,4 +1,4 @@
-import { Button, Stack, Title } from "@mantine/core";
+import { Button, Image, Stack, Title } from "@mantine/core";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -9,13 +9,11 @@ function Index() {
     return (
         <Stack h={"100%"}>
             <Stack flex={1} justify="center" align="center">
-                {/* TODO <Image src={"pwa-192x192.png"} /> */}
+                <Image h={128} w={128} src={"pwa-192x192.png"} />
                 <Title>Darts Time</Title>
             </Stack>
-            <Link to={"/"}>
-                <Button w={"100%"} disabled>
-                    Play
-                </Button>
+            <Link to={"/play"}>
+                <Button w={"100%"}>Play</Button>
             </Link>
             <Link to={"/"}>
                 <Button w={"100%"} disabled>

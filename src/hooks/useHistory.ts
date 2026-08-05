@@ -6,9 +6,9 @@ import { idSchema } from "../schemas/id";
 import { useValidLocalStorage } from "./useValidLocalStorage";
 
 const historyItemSchema = z.object({
-    players: z.array(
+    profiles: z.array(
         z.object({
-            playerId: idSchema,
+            id: idSchema,
             average: averageSchema,
             checkout: checkoutSchema,
         }),
@@ -30,15 +30,15 @@ export const useHistory = () => {
 
     const remove = (index: number) => setHistory((prev) => prev.toSpliced(index, 1));
 
-    const getStats = (playerId: number) => {
+    const getStats = (id: number) => {
         return history
             .map((item) => {
-                const player = item.players.find((p) => p.playerId === playerId);
+                const player = item.profiles.find((p) => p.id === id);
                 return (
                     player && {
                         average: player.average,
                         checkout: player.checkout,
-                        won: item.winnerId === playerId,
+                        won: item.winnerId === id,
                         date: item.date,
                     }
                 );
