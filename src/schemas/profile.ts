@@ -1,25 +1,16 @@
 import z from "zod";
 
-import { ProfileType, profileTypeSchema } from "../enums/profileType";
+import { profileTypeSchema } from "../enums/profileType";
+import { averageSchema } from "./average";
+import { checkoutSchema } from "./checkout";
 import { idSchema } from "./id";
 
-const profileBase = z.object({
+export const profileSchema = z.object({
     id: idSchema,
     name: z.string().trim().nonempty(),
     type: profileTypeSchema,
+    average: averageSchema,
+    checkout: checkoutSchema,
 });
-
-export const profileSchema = z.discriminatedUnion("type", [
-    profileBase.extend({
-        type: z.literal(ProfileType.PLAYER),
-        average: z.never().optional(),
-        checkout: z.never().optional(),
-    }),
-    profileBase.extend({
-        type: z.literal(ProfileType.DARTBOT),
-        average: z.int().min(1).max(180),
-        checkout: z.int().min(1).max(100),
-    }),
-]);
 
 export type Profile = z.infer<typeof profileSchema>;

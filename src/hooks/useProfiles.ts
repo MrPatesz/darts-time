@@ -1,17 +1,32 @@
 import z from "zod";
 
+import { ProfileType } from "../enums/profileType";
 import { profileSchema, type Profile } from "../schemas/profile";
+import { calculateAverage } from "../utils/calculateAverage";
 import { defaultBots } from "../utils/defaultBots";
+import { useHistory } from "./useHistory";
 import { useValidLocalStorage } from "./useValidLocalStorage";
 
 export const useProfiles = () => {
-    const [profiles, setProfiles] = useValidLocalStorage({
+    const [_profiles, setProfiles] = useValidLocalStorage({
         key: "profiles",
         schema: z.array(profileSchema),
         defaultValue: defaultBots,
     });
 
-    // TODO stats for players
+    const { getStats } = useHistory();
+
+    const profiles = _profiles.map((p) => {
+        if (p.type === ProfileType.DARTBOT) {
+            return p;
+        }
+        const stats = getStats(p.id);
+        return {
+            ...p,
+            average: calculateAverage(stats.map((s) => s.average)),
+            checkout: calculateAverage(stats.map((s) => s.checkout)),
+        };
+    });
 
     const add = (profile: Profile) =>
         setProfiles((prev) => {

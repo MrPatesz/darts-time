@@ -63,12 +63,13 @@ function RouteComponent() {
                                 accessor: "average",
                                 title: isMobile ? "Avg." : "Average",
                                 sortable: true,
+                                render: (p) => p.average || "-",
                             },
                             {
                                 accessor: "checkout",
                                 title: isMobile ? "%" : "Checkout",
                                 sortable: true,
-                                render: (p) => p.checkout && `${p.checkout}%`,
+                                render: (p) => (p.checkout ? `${p.checkout}%` : "-"),
                             },
                             {
                                 accessor: "actions",
@@ -110,7 +111,7 @@ function ProfileModal({ id, onClose }: { id: number; onClose: () => void }) {
     const creation = id === 0;
 
     const defaultValues: Profile | undefined = creation
-        ? { id: 1, name: "", type: ProfileType.PLAYER }
+        ? { id: 1, name: "", type: ProfileType.PLAYER, average: 1, checkout: 1 }
         : profiles.find((p) => p.id === id);
 
     const form = useAppForm({
@@ -148,15 +149,6 @@ function ProfileModal({ id, onClose }: { id: number; onClose: () => void }) {
                                         label={"Type"}
                                         enumObject={ProfileType}
                                         readOnly={!creation}
-                                        onChange={(newType) => {
-                                            if (newType === ProfileType.DARTBOT) {
-                                                form.setFieldValue("average", 1);
-                                                form.setFieldValue("checkout", 1);
-                                            } else {
-                                                form.resetField("average");
-                                                form.resetField("checkout");
-                                            }
-                                        }}
                                     />
                                 )}
                             </form.AppField>
