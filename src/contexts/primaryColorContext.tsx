@@ -1,13 +1,19 @@
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { createContext, useContext, type ReactNode } from "react";
 
+import { PrimaryColor, primaryColorSchema } from "../enums/primaryColor";
+import { useValidLocalStorage } from "../hooks/useValidLocalStorage";
 import type { SetState } from "../types/setState";
-import type { PrimaryColor } from "../utils/primaryColors";
 
-const primaryColorContext = createContext<[PrimaryColor, SetState<PrimaryColor>] | null>(null);
+const primaryColorContext = createContext<readonly [PrimaryColor, SetState<PrimaryColor>] | null>(
+    null,
+);
 
 export const PrimaryColorProvider = ({ children }: { children: ReactNode }) => {
-    const value = useLocalStorage<PrimaryColor>("mantine-primary-color-value", "cyan");
+    const value = useValidLocalStorage({
+        key: "mantine-primary-color-value",
+        schema: primaryColorSchema,
+        defaultValue: PrimaryColor.cyan,
+    });
 
     return <primaryColorContext.Provider value={value}>{children}</primaryColorContext.Provider>;
 };

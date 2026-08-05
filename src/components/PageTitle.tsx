@@ -6,7 +6,7 @@ export const PageTitle = ({ title }: { title: string }) => {
     return (
         <Group justify="space-between">
             <Link to={"/"}>
-                <ActionIcon variant="default">
+                <ActionIcon>
                     <IconArrowLeft />
                 </ActionIcon>
             </Link>

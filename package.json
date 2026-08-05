@@ -24,6 +24,7 @@
         "@tanstack/react-form": "^1.33.2",
         "@tanstack/react-router": "^1.170.18",
         "@uidotdev/usehooks": "^2.4.1",
+        "mantine-datatable": "^9.4.0",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",
         "zod": "^4.4.3"

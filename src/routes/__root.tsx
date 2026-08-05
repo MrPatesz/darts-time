@@ -1,4 +1,5 @@
 import {
+    ActionIcon,
     Box,
     Grid,
     Group,
@@ -10,6 +11,7 @@ import {
 } from "@mantine/core";
 
 import "@mantine/core/styles.css";
+import "mantine-datatable/styles.layer.css";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -62,6 +64,11 @@ const theme: MantineThemeOverride = {
         SimpleGrid: SimpleGrid.extend({
             defaultProps: {
                 spacing: "xs",
+            },
+        }),
+        ActionIcon: ActionIcon.extend({
+            defaultProps: {
+                variant: "transparent",
             },
         }),
     },

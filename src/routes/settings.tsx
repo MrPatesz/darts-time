@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { PageTitle } from "../components/PageTitle";
 import { usePrimaryColor } from "../contexts/primaryColorContext";
-import { primaryColors } from "../utils/primaryColors";
+import { primaryColors } from "../enums/primaryColor";
 import { toPascalCase } from "../utils/toPascalCase";
 
 export const Route = createFileRoute("/settings")({
