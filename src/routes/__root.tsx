@@ -3,8 +3,11 @@ import {
     Box,
     Grid,
     Group,
+    Input,
     MantineProvider,
+    NumberInput,
     Paper,
+    Select,
     SimpleGrid,
     Stack,
     Tooltip,
@@ -12,9 +15,11 @@ import {
 } from "@mantine/core";
 
 import "@mantine/core/styles.css";
+import "mantine-contextmenu/styles.layer.css";
 import "mantine-datatable/styles.layer.css";
+
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { ContextMenuProvider } from "mantine-contextmenu";
 
 import { usePrimaryColor } from "../contexts/primaryColorContext";
 
@@ -23,19 +28,13 @@ export const Route = createRootRoute({ component: RootLayout });
 function RootLayout() {
     const [primaryColor] = usePrimaryColor();
 
-    useEffect(() => {
-        try {
-            void navigator.wakeLock.request("screen");
-            // @ts-expect-error
-            navigator.virtualKeyboard.overlaysContent = true;
-        } catch {}
-    }, []);
-
     return (
         <MantineProvider theme={{ ...theme, primaryColor }}>
-            <Box p={"xs"} h={"100dvh"} w={"100dvw"}>
-                <Outlet />
-            </Box>
+            <ContextMenuProvider>
+                <Box p={"xs"} h={"100dvh"} w={"100dvw"}>
+                    <Outlet />
+                </Box>
+            </ContextMenuProvider>
         </MantineProvider>
     );
 }
@@ -77,6 +76,22 @@ const theme: MantineThemeOverride = {
             defaultProps: {
                 withBorder: true,
                 p: "xs",
+            },
+        }),
+        Input: Input.extend({
+            defaultProps: {
+                flex: 1,
+            },
+        }),
+        NumberInput: NumberInput.extend({
+            defaultProps: {
+                allowDecimal: false,
+                allowNegative: false,
+            },
+        }),
+        Select: Select.extend({
+            defaultProps: {
+                clearable: false,
             },
         }),
     },

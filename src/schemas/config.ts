@@ -2,7 +2,7 @@ import z from "zod";
 
 import { idSchema } from "./id";
 
-export const gameConfigSchema = z.object({
+export const configSchema = z.object({
     startscore: z.int().min(101).max(2501),
     legsForSet: z.int().min(1).max(30),
     setsToWin: z.int().min(1).max(30),
@@ -12,9 +12,9 @@ export const gameConfigSchema = z.object({
         .max(4),
 });
 
-export type GameConfig = z.infer<typeof gameConfigSchema>;
+export type Config = z.infer<typeof configSchema>;
 
-export const defaultGameConfig: Readonly<GameConfig> = {
+export const defaultConfig: Readonly<Config> = {
     startscore: 501,
     legsForSet: 1,
     setsToWin: 1,

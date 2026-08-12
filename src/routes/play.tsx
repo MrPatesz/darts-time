@@ -1,11 +1,21 @@
-import { ActionIcon, Button, Group, Paper, Select, Stack, Text } from "@mantine/core";
+import {
+    ActionIcon,
+    Button,
+    Group,
+    Paper,
+    Select,
+    Stack,
+    Text,
+    Title,
+    Tooltip,
+} from "@mantine/core";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { PageTitle } from "../components/PageTitle";
 import { useAppForm } from "../hooks/useAppForm";
-import { defaultGameConfig, gameConfigSchema } from "../schemas/gameConfig";
+import { defaultConfig, configSchema } from "../schemas/config";
 import { getErrorString } from "../utils/getErrorString";
 
 export const Route = createFileRoute("/play")({
@@ -16,10 +26,10 @@ function RouteComponent() {
     const [enableSets, setEnableSets] = useState(false);
 
     const form = useAppForm({
-        defaultValues: defaultGameConfig,
-        validators: { onSubmit: gameConfigSchema },
+        defaultValues: defaultConfig,
+        validators: { onSubmit: configSchema },
         onSubmit: async (/* { value } */) => {
-            // navigate("match");
+            // await navigate({ to: "/game" });
             // TODO save game configs
         },
     });
@@ -41,18 +51,14 @@ function RouteComponent() {
                             <form.AppField name="startscore">
                                 {(field) => (
                                     <field.NumberField
-                                        flex={1}
                                         label={"Startscore"}
                                         step={50}
-                                        allowNegative={false}
-                                        allowDecimal={false}
                                         min={101}
                                         max={2501}
                                     />
                                 )}
                             </form.AppField>
                             <Select
-                                flex={1}
                                 label={"Format"}
                                 value={enableSets ? "Sets" : "Legs"}
                                 data={["Legs", "Sets"]}
@@ -68,24 +74,14 @@ function RouteComponent() {
                             {enableSets && (
                                 <form.AppField name="setsToWin">
                                     {(field) => (
-                                        <field.NumberField
-                                            flex={1}
-                                            label={"First to"}
-                                            allowNegative={false}
-                                            allowDecimal={false}
-                                            min={1}
-                                            max={30}
-                                        />
+                                        <field.NumberField label={"First to"} min={1} max={30} />
                                     )}
                                 </form.AppField>
                             )}
                             <form.AppField name="legsForSet">
                                 {(field) => (
                                     <field.NumberField
-                                        flex={1}
                                         label={enableSets ? "Legs per set" : "First to"}
-                                        allowNegative={false}
-                                        allowDecimal={false}
                                         min={1}
                                         max={30}
                                     />
@@ -98,6 +94,7 @@ function RouteComponent() {
                     {({ state, pushValue, removeValue }) => (
                         <Paper flex={1} pos={"relative"}>
                             <Stack
+                                gap={4}
                                 p={"xs"}
                                 pos={"absolute"}
                                 top={0}
@@ -107,22 +104,26 @@ function RouteComponent() {
                                 style={{ overflow: "auto" }}
                             >
                                 <Group>
-                                    <Text flex={1}>Profiles</Text>
-                                    <ActionIcon
-                                        onClick={() => pushValue({ id: 0, handicap: 0 })}
-                                        disabled={state.value.length === 4}
-                                    >
-                                        <IconPlus />
-                                    </ActionIcon>
+                                    <Title order={5} flex={1}>
+                                        Profiles
+                                    </Title>
+                                    <Tooltip label={"Add"}>
+                                        <ActionIcon
+                                            onClick={() => pushValue({ id: 0, handicap: 0 })}
+                                            disabled={state.value.length === 4}
+                                            size={"lg"}
+                                        >
+                                            <IconPlus />
+                                        </ActionIcon>
+                                    </Tooltip>
                                 </Group>
                                 <form.Subscribe selector={(d) => d.values.profiles}>
                                     {(profiles) =>
                                         profiles.map((_, index) => (
-                                            <Group key={index} align={"top"}>
+                                            <Group key={index} align={"top"} gap={4}>
                                                 <form.AppField name={`profiles[${index}].id`}>
                                                     {(field) => (
                                                         <field.ProfileField
-                                                            flex={1}
                                                             disabledIds={profiles.map((p) => p.id)}
                                                         />
                                                     )}
@@ -132,17 +133,20 @@ function RouteComponent() {
                                                         <field.NumberField
                                                             flex={0.5}
                                                             prefix={"+"}
-                                                            allowDecimal={false}
-                                                            allowNegative={false}
                                                             min={0}
                                                             max={1000}
                                                             step={50}
                                                         />
                                                     )}
                                                 </form.AppField>
-                                                <ActionIcon onClick={() => removeValue(index)}>
-                                                    <IconTrash />
-                                                </ActionIcon>
+                                                <Tooltip label={"Remove"}>
+                                                    <ActionIcon
+                                                        onClick={() => removeValue(index)}
+                                                        size={"lg"}
+                                                    >
+                                                        <IconTrash />
+                                                    </ActionIcon>
+                                                </Tooltip>
                                             </Group>
                                         ))
                                     }

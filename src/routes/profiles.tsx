@@ -1,7 +1,8 @@
-import { ActionIcon, Button, Group, Modal, Stack, Table } from "@mantine/core";
+import { ActionIcon, Button, Modal, Stack, Table, Tooltip } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { useContextMenu } from "mantine-contextmenu";
 import { DataTable, type DataTableSortStatus } from "mantine-datatable";
 import { useState } from "react";
 
@@ -32,11 +33,22 @@ function RouteComponent() {
 
     const isMobile = useMediaQuery("(max-width: 768px)");
 
+    const { showContextMenu } = useContextMenu();
+
     return (
         <>
             {id !== null && <ProfileModal id={id} onClose={() => setId(null)} />}
             <Stack h={"100%"}>
-                <PageTitle title="Profiles" />
+                <PageTitle
+                    title="Profiles"
+                    rightIcon={
+                        <Tooltip label={"Create"}>
+                            <ActionIcon onClick={() => setId(0)}>
+                                <IconPlus />
+                            </ActionIcon>
+                        </Tooltip>
+                    }
+                />
                 <Table.ScrollContainer
                     minWidth={undefined}
                     maxHeight={"100%"}
@@ -47,6 +59,27 @@ function RouteComponent() {
                         onSortStatusChange={setSortStatus}
                         withColumnBorders
                         // TODO stickyHeader={true}
+                        // TODO highlightOnHover
+                        onRowContextMenu={({ event, record }) => {
+                            showContextMenu([
+                                {
+                                    key: "edit",
+                                    style: { height: 32 },
+                                    icon: <IconPencil />,
+                                    onClick: () => setId(record.id),
+                                },
+                                {
+                                    key: "delete",
+                                    style: { height: 32 },
+                                    icon: <IconTrash />,
+                                    onClick: () => {
+                                        if (confirm("Would you like to delete this profile?")) {
+                                            remove(record.id);
+                                        }
+                                    },
+                                },
+                            ])(event);
+                        }}
                         records={records}
                         columns={[
                             {
@@ -70,32 +103,6 @@ function RouteComponent() {
                                 title: isMobile ? "%" : "Checkout",
                                 sortable: true,
                                 render: (p) => (p.checkout ? `${p.checkout}%` : "-"),
-                            },
-                            {
-                                accessor: "actions",
-                                width: "86.5px",
-                                textAlign: "right",
-                                title: (
-                                    <ActionIcon key={"add"} onClick={() => setId(0)}>
-                                        <IconPlus />
-                                    </ActionIcon>
-                                ),
-                                render: (p) => (
-                                    <Group gap={"xs"}>
-                                        <ActionIcon onClick={() => setId(p.id)}>
-                                            <IconPencil />
-                                        </ActionIcon>
-                                        <ActionIcon
-                                            onClick={() => {
-                                                if (confirm("Are you sure?")) {
-                                                    remove(p.id);
-                                                }
-                                            }}
-                                        >
-                                            <IconTrash />
-                                        </ActionIcon>
-                                    </Group>
-                                ),
                             },
                         ]}
                     />
@@ -160,8 +167,6 @@ function ProfileModal({ id, onClose }: { id: number; onClose: () => void }) {
                                                 {(field) => (
                                                     <field.NumberField
                                                         label={"Average"}
-                                                        allowDecimal={false}
-                                                        allowNegative={false}
                                                         min={1}
                                                         max={180}
                                                     />
@@ -171,8 +176,6 @@ function ProfileModal({ id, onClose }: { id: number; onClose: () => void }) {
                                                 {(field) => (
                                                     <field.NumberField
                                                         label={"Checkout"}
-                                                        allowDecimal={false}
-                                                        allowNegative={false}
                                                         min={1}
                                                         max={100}
                                                         suffix={"%"}

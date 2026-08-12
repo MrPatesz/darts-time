@@ -9,7 +9,7 @@ export const EnumField = <E extends string>({
     enumObject,
     onChange,
     ...props
-}: Omit<SelectProps<E>, "name" | "value" | "onBlur" | "error" | "data" | "clearable"> & {
+}: Omit<SelectProps<E>, "name" | "value" | "onBlur" | "error" | "data"> & {
     enumObject: Enum<E>;
 }) => {
     const field = useFieldContext<E>();
@@ -29,7 +29,6 @@ export const EnumField = <E extends string>({
             }}
             error={getErrorString(field.state.meta.errors)}
             data={data}
-            clearable={false} // TODO nullability
         />
     );
 };

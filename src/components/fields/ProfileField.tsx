@@ -9,10 +9,7 @@ import { toPascalCase } from "../../utils/toPascalCase";
 export const ProfileField = ({
     disabledIds,
     ...props
-}: Omit<
-    SelectProps<Id>,
-    "name" | "value" | "onBlur" | "onChange" | "error" | "data" | "clearable"
-> & {
+}: Omit<SelectProps<Id>, "name" | "value" | "onBlur" | "onChange" | "error" | "data"> & {
     disabledIds?: Array<Id>;
 }) => {
     const field = useFieldContext<Id>();
@@ -43,7 +40,6 @@ export const ProfileField = ({
             }}
             error={getErrorString(field.state.meta.errors)}
             data={data}
-            clearable={false} // TODO nullability
         />
     );
 };
