@@ -42,6 +42,7 @@ function RouteComponent() {
                 )}
             />
             {/* TODO dartbot throw speed */}
+            {/* TODO hide in-game stats */}
         </Stack>
     );
 }

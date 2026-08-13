@@ -28,11 +28,12 @@ export const useProfiles = () => {
         };
     });
 
-    const add = (profile: Profile) =>
-        setProfiles((prev) => {
-            const maxId = Math.max(...prev.map((p) => p.id));
-            return [...prev, { ...profile, id: maxId + 1 }];
-        });
+    const add = (profile: Profile) => {
+        const maxId = Math.max(...profiles.map((p) => p.id));
+        const newId = maxId + 1;
+        setProfiles((prev) => [...prev, { ...profile, id: newId }]);
+        return newId;
+    };
 
     const remove = (id: number) =>
         setProfiles((prev) => {
@@ -40,12 +41,13 @@ export const useProfiles = () => {
             return prev.toSpliced(index, 1);
         });
 
-    const update = (profile: Profile) =>
+    const update = (profile: Profile): undefined => {
         setProfiles((prev) => {
             const index = prev.findIndex((p) => p.id === profile.id);
 
             return prev.toSpliced(index, 1, profile);
         });
+    };
 
     return { profiles, add, remove, update };
 };

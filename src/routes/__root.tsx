@@ -17,6 +17,7 @@ import {
 import "@mantine/core/styles.css";
 import "mantine-contextmenu/styles.layer.css";
 import "mantine-datatable/styles.layer.css";
+import "../styles/root.css";
 
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { ContextMenuProvider } from "mantine-contextmenu";
@@ -92,6 +93,7 @@ const theme: MantineThemeOverride = {
         Select: Select.extend({
             defaultProps: {
                 clearable: false,
+                allowDeselect: false,
             },
         }),
     },
