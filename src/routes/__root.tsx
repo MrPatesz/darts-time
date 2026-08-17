@@ -30,7 +30,7 @@ function RootLayout() {
     const [primaryColor] = usePrimaryColor();
 
     return (
-        <MantineProvider theme={{ ...theme, primaryColor }}>
+        <MantineProvider theme={{ ...theme, primaryColor }} defaultColorScheme={"auto"}>
             <ContextMenuProvider>
                 <Box p={"xs"} h={"100dvh"} w={"100dvw"}>
                     <Outlet />
